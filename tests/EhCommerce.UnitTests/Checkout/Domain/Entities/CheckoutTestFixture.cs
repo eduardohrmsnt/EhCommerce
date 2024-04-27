@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Bogus.Extensions.Brazil;
+using EhCommerce.Checkout.ValueObjects;
 using EhCommerce.UnitTests.Common;
 using Xunit;
 
@@ -17,24 +14,40 @@ namespace EhCommerce.UnitTests.Checkout.Domain.Entities
                                                        Faker.Address.City(),
                                                        Faker.Address.StreetName(),
                                                        Faker.Address.BuildingNumber(),
-                                                       Faker.Random.Words(3));
+                                                       Faker.Lorem.Letter(100),
+                                                       Faker.Address.ZipCode());
 
-        public Payment ValidCreditCardPayment => new CreditCardPayment(Faker.Address.Country(),
-                                                                       Faker.Address.StateAbbr(),
-                                                                       Faker.Address.City(),
-                                                                       Faker.Address.StreetName(),
-                                                                       Faker.Address.BuildingNumber(),
-                                                                       Faker.Random.Words(3));
+        public ShippingData ValidShippingData => new ShippingData(Faker.Random.Decimal(min: (decimal)0.1, max: (decimal)99.0),
+                                                                  Faker.Company.Cnpj());
+
+        public Payment ValidCreditCardPayment => new CreditCardPayment(Faker.Finance.CreditCardNumber(),
+                                                                       Faker.Person.FullName.ToUpper(),
+                                                                       string.Concat(Faker.Date.Month(), "/", Faker.Date.Future().Year));
 
 
-        public Payment ValidBilletPayment => new BilletPayment(Faker.Address.Country(),
-                                                                       Faker.Address.StateAbbr(),
-                                                                       Faker.Address.City(),
-                                                                       Faker.Address.StreetName(),
-                                                                       Faker.Address.BuildingNumber(),
-                                                                       Faker.Random.Words(3));
+        public Payment ValidBilletPayment => new BilletPayment(Faker.Internet.Url());
 
-        public Payment ValidBilletPayment => new InstantPayment(Faker.Random.Guid(),
-                                                                Faker.Random.Decimal(min: (decimal)0.0));
+        public Payment ValidInstantPayment => new InstantPayment(Faker.Lorem.Paragraph());
+
+        public Coupon ValidCoupon => new Coupon(Faker.Lorem.Letter(num: 10).ToUpper(),
+                                                Faker.Random.Int(min: 1, max: 90),
+                                                Faker.Random.Decimal(min: (decimal)0.1, max: (decimal)99.0));
+
+        public List<Payment> RandomPayment => Enumerable.Range(0, 1).Select(c =>
+        {
+            var random = new Random();
+
+            var randomNumber = random.Next(3);
+
+            if (randomNumber == 1)
+                return ValidInstantPayment;
+            else if (randomNumber == 2)
+                return ValidCreditCardPayment;
+            else if (randomNumber == 3)
+                return ValidBilletPayment;
+
+            return ValidInstantPayment;
+
+        }).ToList();
     }
 }
