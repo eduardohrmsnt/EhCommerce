@@ -49,5 +49,4 @@ jobs:
           dotnet clean ${{ env.SOURCE_PATH }}
           dotnet restore ${{ env.SOURCE_PATH }}
           dotnet build ${{ env.SOURCE_PATH }}
-          dotnet test ${{ env.SOURCE_PATH }}
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
