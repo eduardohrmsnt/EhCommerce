@@ -70,7 +70,8 @@ jobs:
             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           shell: powershell
           run: |
-            .\.sonar\scanner\dotnet-sonarscanner begin /k:"eduardohrmsnt_EhCommerce" /o:"eduardohrmsnt" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-            dotnet build ${{ env.SOURCE_PATH }} --no-incremental
-            dotnet test ${{ env.SOURCE_PATH }} --collect "Code Coverage"
+            .\.sonar\scanner\dotnet-sonarscanner begin /k:"eduardohrmsnt_EhCommerce" /o:"eduardohrmsnt" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
+            dotnet tool update --global dotnet-coverage
+            dotnet build --no-incremental
+            dotnet-coverage collect "dotnet test ${{ env.SOURCE_PATH }}" -f xml -o "coverage.xml"
             .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
