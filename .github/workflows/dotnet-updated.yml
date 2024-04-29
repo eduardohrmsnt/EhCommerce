@@ -76,7 +76,7 @@ jobs:
             dotnet-coverage collect "dotnet test ${{ env.SOURCE_PATH }}" -f xml -o "coverage.xml"
             .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
         - name: Code Coverage Report
-        - uses: irongut/CodeCoverageSummary@v1.3.0
+          uses: irongut/CodeCoverageSummary@v1.3.0
           with:
             filename: coverage.xml
             badge: true
