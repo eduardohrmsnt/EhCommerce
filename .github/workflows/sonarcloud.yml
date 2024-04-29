@@ -48,6 +48,6 @@ jobs:
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"eduardohrmsnt_EhCommerce" /o:"eduardohrmsnt" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
           dotnet clean ${{ env.SOURCE_PATH }}
           dotnet restore ${{ env.SOURCE_PATH }}
-          dotnet build ${{ env.SOURCE_PATH }}
-          dotnet test ${{ env.SOURCE_PATH }}
+          dotnet build ${{ env.SOURCE_PATH }} --no-incremental
+          dotnet test ${{ env.SOURCE_PATH }} --collect "Code Coverage"
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
