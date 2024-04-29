@@ -29,12 +29,9 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
       working-directory: ${{ env.SOURCE_PATH }}
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
-      working-directory: ${{ env.SOURCE_PATH }}
   analyzis:
       needs: build
-      name: Build and analyze
+      name: Analyze
       runs-on: ubuntu-latest
       steps:
         - name: Set up JDK 17
@@ -64,10 +61,23 @@ jobs:
             dotnet build ${{ env.SOURCE_PATH }} --no-incremental
             dotnet-coverage collect "dotnet test ${{ env.SOURCE_PATH }}" -f xml -o "coverage.xml"
             dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+  code-coverage:
+      needs: analyzis
+      name: Generate Code Coverage Report
+      runs-on: ubuntu-latest
+      steps:    
+        - name: Checkout
+          uses: actions/checkout@v2
+        - name: Setup .NET
+          uses: actions/setup-dotnet@v1
+          with:
+            dotnet-version: ${{ env.DOTNET_VERSION }}
+        - name: Test
+          run: dotnet test ${{ env.SOURCE_PATH }} --configuration Development --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
         - name: Code Coverage Report
           uses: irongut/CodeCoverageSummary@v1.3.0
           with:
-            filename: ./**/coverage.xml
+            filename: coverage/**/coverage.cobertura.xml
             badge: true
             fail_below_min: true
             format: markdown
