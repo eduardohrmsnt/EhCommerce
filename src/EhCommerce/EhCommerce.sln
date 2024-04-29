@@ -5,19 +5,17 @@ VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Checkout", "Checkout", "{004BA6F4-D6E1-4975-9216-154DC7A2903D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EhCommerce.Checkout", "EhCommerce.Checkout\EhCommerce.Checkout.csproj", "{64FD7CC5-F1D4-4442-B964-0447107C8CB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EhCommerce.Checkout", "EhCommerce.Checkout\EhCommerce.Checkout.csproj", "{64FD7CC5-F1D4-4442-B964-0447107C8CB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EhCommerce.Checkout.Application", "EhCommerce.Checkout.Application\EhCommerce.Checkout.Application.csproj", "{CBB1D05F-A5DA-4282-8D02-11834801F665}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EhCommerce.Checkout.Application", "EhCommerce.Checkout.Application\EhCommerce.Checkout.Application.csproj", "{CBB1D05F-A5DA-4282-8D02-11834801F665}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EhCommerce.Checkout.Data", "EhCommerce.Checkout.Data\EhCommerce.Checkout.Data.csproj", "{76D5C269-36B1-40A7-B996-9E691A6738AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EhCommerce.Checkout.Data", "EhCommerce.Checkout.Data\EhCommerce.Checkout.Data.csproj", "{76D5C269-36B1-40A7-B996-9E691A6738AA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{158523CC-439F-48DF-97D8-F92E8AB7C652}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EhCommerce.UnitTests", "..\..\tests\EhCommerce.UnitTests\EhCommerce.UnitTests.csproj", "{313A7C09-1C9A-4A61-9A21-FEDD60D56FE4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EhCommerce.UnitTests", "..\..\tests\EhCommerce.UnitTests\EhCommerce.UnitTests.csproj", "{313A7C09-1C9A-4A61-9A21-FEDD60D56FE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EhCommerce.IntegrationTests", "..\..\tests\EhCommerce.IntegrationTests\EhCommerce.IntegrationTests.csproj", "{BED9CD38-CC7D-4048-A04B-F62AECFE8FAE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EhCommerce.E2E", "..\..\tests\EhCommerce.E2E\EhCommerce.E2E.csproj", "{8AC569CB-7FB8-45FF-B2CB-471128A3D339}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EhCommerce.IntegrationTests", "..\..\tests\EhCommerce.IntegrationTests\EhCommerce.IntegrationTests.csproj", "{BED9CD38-CC7D-4048-A04B-F62AECFE8FAE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{5940C1B8-307D-48CD-8D6C-148B082A9DB5}"
 EndProject
@@ -47,10 +45,6 @@ Global
 		{BED9CD38-CC7D-4048-A04B-F62AECFE8FAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BED9CD38-CC7D-4048-A04B-F62AECFE8FAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BED9CD38-CC7D-4048-A04B-F62AECFE8FAE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8AC569CB-7FB8-45FF-B2CB-471128A3D339}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8AC569CB-7FB8-45FF-B2CB-471128A3D339}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8AC569CB-7FB8-45FF-B2CB-471128A3D339}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8AC569CB-7FB8-45FF-B2CB-471128A3D339}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,7 +55,6 @@ Global
 		{76D5C269-36B1-40A7-B996-9E691A6738AA} = {004BA6F4-D6E1-4975-9216-154DC7A2903D}
 		{313A7C09-1C9A-4A61-9A21-FEDD60D56FE4} = {158523CC-439F-48DF-97D8-F92E8AB7C652}
 		{BED9CD38-CC7D-4048-A04B-F62AECFE8FAE} = {158523CC-439F-48DF-97D8-F92E8AB7C652}
-		{8AC569CB-7FB8-45FF-B2CB-471128A3D339} = {158523CC-439F-48DF-97D8-F92E8AB7C652}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DB8E9C3A-B363-4E5E-A585-4796F4739125}
