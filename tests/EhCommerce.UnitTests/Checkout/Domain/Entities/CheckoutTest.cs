@@ -1,4 +1,5 @@
 ﻿using EhCommerce.Checkout.ValueObjects;
+using EhCommerce.Shared.Domain;
 using FluentAssertions;
 using Xunit;
 using Entity = EhCommerce.Checkout.Entities;
@@ -62,6 +63,50 @@ namespace EhCommerce.UnitTests.Checkout.Domain.Entities
                 }
             }
 
+        }
+
+        [Theory(DisplayName = nameof(CreateCheckoutWithoutPaymentShouldThrowError))]
+        [MemberData(nameof(InvalidPaymentData))]
+        [Trait("Domain", "Checkout")]
+        public void CreateCheckoutWithoutPaymentShouldThrowError(object invalidPayment)
+        {
+            var address = _checkoutTestFixture.ValidAddress;
+            var shippingData = _checkoutTestFixture.ValidShippingData;
+            var validCoupon = _checkoutTestFixture.ValidCoupon;
+
+            var checkout = () => new Entity.Checkout(address,
+                                        shippingData,
+                                        (List<Payment>)invalidPayment,
+                                        validCoupon);
+
+
+            checkout.Should().Throw<DomainException>().WithMessage("Payments should not be empty.");
+        }
+
+
+        [Fact(DisplayName = nameof(CreateCheckoutWithPaymentsOfTwoTypesShouldThrowError))]
+        [Trait("Domain", "Checkout")]
+        public void CreateCheckoutWithPaymentsOfTwoTypesShouldThrowError()
+        {
+            var address = _checkoutTestFixture.ValidAddress;
+            var shippingData = _checkoutTestFixture.ValidShippingData;
+            var validCoupon = _checkoutTestFixture.ValidCoupon;
+
+            var invalidPayments = _checkoutTestFixture.TwoTypesOfPayment;
+
+            var checkout = () => new Entity.Checkout(address,
+                                        shippingData,
+                                        invalidPayments,
+                                        validCoupon);
+
+
+            checkout.Should().Throw<DomainException>().WithMessage("Only one type of payment is allowed.");
+        }
+
+        public static IEnumerable<object[]> InvalidPaymentData()
+        {
+            yield return new object[] { new List<Payment> { } };
+            yield return new object[] { null };
         }
     }
 }

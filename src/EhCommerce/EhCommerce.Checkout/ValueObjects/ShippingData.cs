@@ -1,6 +1,8 @@
-﻿namespace EhCommerce.Checkout.ValueObjects
+﻿using EhCommerce.Shared.Domain;
+
+namespace EhCommerce.Checkout.ValueObjects
 {
-    public class ShippingData
+    public class ShippingData : IValueObject
     {
         public ShippingData(decimal amount, 
                             string shippingCompanyDocument)

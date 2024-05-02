@@ -49,5 +49,11 @@ namespace EhCommerce.UnitTests.Checkout.Domain.Entities
             return ValidInstantPayment;
 
         }).ToList();
+
+        public List<Payment> TwoTypesOfPayment => new List<Payment>
+        {
+            ValidBilletPayment,
+            ValidInstantPayment
+        };
     }
 }

@@ -1,6 +1,8 @@
-﻿namespace EhCommerce.Checkout.ValueObjects
+﻿using EhCommerce.Shared.Domain;
+
+namespace EhCommerce.Checkout.ValueObjects
 {
-    public class Coupon
+    public class Coupon : IValueObject
     {
         public Coupon(string code,
                       int percentage,

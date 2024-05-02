@@ -1,6 +1,8 @@
-﻿namespace EhCommerce.Checkout.ValueObjects
+﻿using EhCommerce.Shared.Domain;
+
+namespace EhCommerce.Checkout.ValueObjects
 {
-    public class Address
+    public class Address : IValueObject
     {
         public Address(string country,
                        string state,

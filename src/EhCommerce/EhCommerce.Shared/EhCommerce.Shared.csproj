@@ -6,9 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\EhCommerce.Language\EhCommerce.Language.csproj" />
-    <ProjectReference Include="..\EhCommerce.Shared\EhCommerce.Shared.csproj" />
-  </ItemGroup>
-
 </Project>
