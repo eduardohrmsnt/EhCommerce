@@ -61,6 +61,24 @@ namespace EhCommerce.Language {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a {0} should be greater than {1}..
+        /// </summary>
+        public static string FieldShouldBeGreaterThan {
+            get {
+                return ResourceManager.GetString("FieldShouldBeGreaterThan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a {0} should be less than {1}..
+        /// </summary>
+        public static string FieldShouldBeLessThan {
+            get {
+                return ResourceManager.GetString("FieldShouldBeLessThan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a {0} should not be empty..
         /// </summary>
         public static string ObrigatoryField {

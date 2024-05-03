@@ -27,10 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Checkout\Application\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\src\EhCommerce\EhCommerce.Checkout\EhCommerce.Checkout.csproj" />
   </ItemGroup>
 

@@ -8,10 +8,10 @@ namespace EhCommerce.Checkout.ValueObjects
                             string shippingCompanyDocument)
         {
             ShippingCompanyDocument = shippingCompanyDocument;
-            Amount = amount;
+            Price = amount;
         }
 
         public string ShippingCompanyDocument { get; }
-        public decimal Amount { get; }
+        public decimal Price { get; }
     }
 }
