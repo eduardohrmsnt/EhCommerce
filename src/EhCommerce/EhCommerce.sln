@@ -19,9 +19,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EhCommerce.IntegrationTests
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{5940C1B8-307D-48CD-8D6C-148B082A9DB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EhCommerce.Shared", "EhCommerce.Shared\EhCommerce.Shared.csproj", "{78BAE28C-BD81-4EF0-ADD9-1CE86C95D9F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EhCommerce.Shared", "EhCommerce.Shared\EhCommerce.Shared.csproj", "{78BAE28C-BD81-4EF0-ADD9-1CE86C95D9F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EhCommerce.Language", "EhCommerce.Language\EhCommerce.Language.csproj", "{AEB6BD49-8431-4251-A76D-2EC404D723E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EhCommerce.Language", "EhCommerce.Language\EhCommerce.Language.csproj", "{AEB6BD49-8431-4251-A76D-2EC404D723E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EhCommerce.Contracts", "EhCommerce.Contracts\EhCommerce.Contracts.csproj", "{892D2B9F-5ED6-4F37-814E-203206A758ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{AEB6BD49-8431-4251-A76D-2EC404D723E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEB6BD49-8431-4251-A76D-2EC404D723E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AEB6BD49-8431-4251-A76D-2EC404D723E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{892D2B9F-5ED6-4F37-814E-203206A758ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{892D2B9F-5ED6-4F37-814E-203206A758ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{892D2B9F-5ED6-4F37-814E-203206A758ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{892D2B9F-5ED6-4F37-814E-203206A758ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,6 +75,7 @@ Global
 		{BED9CD38-CC7D-4048-A04B-F62AECFE8FAE} = {158523CC-439F-48DF-97D8-F92E8AB7C652}
 		{78BAE28C-BD81-4EF0-ADD9-1CE86C95D9F3} = {5940C1B8-307D-48CD-8D6C-148B082A9DB5}
 		{AEB6BD49-8431-4251-A76D-2EC404D723E5} = {5940C1B8-307D-48CD-8D6C-148B082A9DB5}
+		{892D2B9F-5ED6-4F37-814E-203206A758ED} = {5940C1B8-307D-48CD-8D6C-148B082A9DB5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DB8E9C3A-B363-4E5E-A585-4796F4739125}

@@ -21,7 +21,7 @@ namespace EhCommerce.UnitTests.Checkout.Application.UseCases
         [Trait("UseCases", "PlaceOrderUseCase")]
         public async Task PlaceOrderWithAllCorrectShouldPersistOrder()
         {
-            //var input = _fixture.ValidInput;
+            var input = _fixture.ValidInput;
         }
     }
 }
