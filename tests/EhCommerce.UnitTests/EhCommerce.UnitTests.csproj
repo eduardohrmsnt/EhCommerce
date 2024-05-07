@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\EhCommerce\EhCommerce.Checkout.Application\EhCommerce.Checkout.Application.csproj" />
+    <ProjectReference Include="..\..\src\EhCommerce\EhCommerce.Checkout.Application\EhCommerce.Checkout.Command.csproj" />
     <ProjectReference Include="..\..\src\EhCommerce\EhCommerce.Checkout\EhCommerce.Checkout.csproj" />
   </ItemGroup>
 

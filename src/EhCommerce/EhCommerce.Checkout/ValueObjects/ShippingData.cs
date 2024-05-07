@@ -5,13 +5,13 @@ namespace EhCommerce.Checkout.ValueObjects
     public class ShippingData : IValueObject
     {
         public ShippingData(decimal amount, 
-                            string shippingCompanyDocument)
+                            string? shippingCompanyDocument)
         {
             ShippingCompanyDocument = shippingCompanyDocument;
             Price = amount;
         }
 
-        public string ShippingCompanyDocument { get; }
+        public string? ShippingCompanyDocument { get; }
         public decimal Price { get; }
     }
 }

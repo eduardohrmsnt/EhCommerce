@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EhCommerce.Shared.Validator
+﻿namespace EhCommerce.Shared.Validator
 {
     public class ValidationResult
     {

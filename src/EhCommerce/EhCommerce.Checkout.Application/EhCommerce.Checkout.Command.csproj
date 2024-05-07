@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\EhCommerce.Checkout.Enums\EhCommerce.Enums.csproj" />
+    <ProjectReference Include="..\EhCommerce.Checkout\EhCommerce.Checkout.csproj" />
     <ProjectReference Include="..\EhCommerce.Contracts\EhCommerce.Contracts.csproj" />
     <ProjectReference Include="..\EhCommerce.Shared\EhCommerce.Shared.csproj" />
   </ItemGroup>

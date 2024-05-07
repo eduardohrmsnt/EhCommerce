@@ -1,4 +1,4 @@
-﻿using Bogus;
+﻿using EhCommerce.Checkout.Entities;
 using EhCommerce.Checkout.ValueObjects;
 using EhCommerce.Shared.Domain;
 using EhCommerce.Shared.Extensions;
@@ -19,21 +19,23 @@ namespace EhCommerce.UnitTests.Order.Domain.Entities
             _orderTestFixture = orderTestFixture;
         }
 
-        [Theory(DisplayName = nameof(CreateOrderSuccess))]
-        [MemberData(nameof(ValidPaymentData))]
+        [Fact(DisplayName = nameof(CreateOrderSuccess))]
         [Trait("Domain", "Checkout")]
-        public void CreateOrderSuccess(List<Payment> payments)
+        public void CreateOrderSuccess()
         {
             var address = _orderTestFixture.ValidAddress;
             var shippingData = _orderTestFixture.ValidShippingData;
             var validCoupon = _orderTestFixture.ValidCoupon;
+            var validProducts = _orderTestFixture.ValidProducts();
 
             var order = new Entity.Order(address,
                                         shippingData,
-                                        payments,
+                                        validProducts,
+                                        Guid.NewGuid(),
                                         validCoupon);
 
             order.Should().NotBeNull();
+            order.PaymentId.Should().NotBeEmpty();
             order.Address.Street.Should().Be(address.Street);
             order.Address.State.Should().Be(address.State);
             order.Address.City.Should().Be(address.City);
@@ -46,61 +48,26 @@ namespace EhCommerce.UnitTests.Order.Domain.Entities
             order.Coupon?.Code.Should().Be(validCoupon.Code);
             order.Coupon?.Amount.Should().Be(validCoupon.Amount);
             order.Coupon?.Percentage.Should().Be(validCoupon.Percentage);
-
-            for (var i = 0; i < order.Payments.Count; i++)
-            {
-                if (order.Payments[i] is CreditCardPayment)
-                {
-                    ((CreditCardPayment)order.Payments[i]).CreditCardNumber.Should().Be(((CreditCardPayment)payments[i]).CreditCardNumber);
-                    ((CreditCardPayment)order.Payments[i]).CardHolderName.Should().Be(((CreditCardPayment)payments[i]).CardHolderName);
-                    ((CreditCardPayment)order.Payments[i]).ExpirationDate.Should().Be(((CreditCardPayment)payments[i]).ExpirationDate);
-                }
-                else if (order.Payments[i] is BilletPayment)
-                {
-                    ((BilletPayment)order.Payments[i]).BilletUrl.Should().Be(((BilletPayment)payments[i]).BilletUrl);
-                }
-                else if (order.Payments[i] is InstantPayment)
-                {
-
-                    ((InstantPayment)order.Payments[i]).RandomKey.Should().Be(((InstantPayment)payments[i]).RandomKey);
-                }
-            }
-
         }
 
-        [Theory(DisplayName = nameof(CreateOrderWithoutPaymentShouldThrowError))]
-        [MemberData(nameof(InvalidPaymentData))]
+        [Fact(DisplayName = nameof(CreateOrderWithoutPaymentIdShouldThrow))]
         [Trait("Domain", "Checkout")]
-        public void CreateOrderWithoutPaymentShouldThrowError(object invalidPayment)
+        public void CreateOrderWithoutPaymentIdShouldThrow()
         {
             var address = _orderTestFixture.ValidAddress;
             var shippingData = _orderTestFixture.ValidShippingData;
+            var validCoupon = _orderTestFixture.ValidCoupon;
+            var validProducts = _orderTestFixture.ValidProducts();
 
-            var order = () => new Entity.Order(address,
-                                               shippingData,
-                                               (List<Payment>)invalidPayment);
+            var action = () => new Entity.Order(address,
+                                                shippingData,
+                                                validProducts,
+                                                Guid.Empty,
+                                                validCoupon);
 
-
-            order.Should().Throw<DomainException>().Which.ValidationResult.Should().Contain(vr => vr.Message == "Payments should not be empty.");
+            action.Should().Throw<DomainException>().Which.ValidationResult.Should().Contain(vr => vr.Message == "PaymentId should not be empty.");
         }
 
-
-        [Fact(DisplayName = nameof(CreateOrderWithPaymentsOfTwoTypesShouldThrowError))]
-        [Trait("Domain", "Checkout")]
-        public void CreateOrderWithPaymentsOfTwoTypesShouldThrowError()
-        {
-            var address = _orderTestFixture.ValidAddress;
-            var shippingData = _orderTestFixture.ValidShippingData;
-
-            var invalidPayments = _orderTestFixture.TwoTypesOfPayment;
-
-            var order = () => new Entity.Order(address,
-                                        shippingData,
-                                        invalidPayments);
-
-
-            order.Should().Throw<DomainException>().Which.ValidationResult.Should().Contain(vr => vr.Message == "Only one type of payment is allowed.");
-        }
 
         [Fact(DisplayName = nameof(CreateOrderWithInvalidAddressShouldThrow))]
         [Trait("Domain", "Checkout")]
@@ -108,10 +75,12 @@ namespace EhCommerce.UnitTests.Order.Domain.Entities
         {
             var shippingData = _orderTestFixture.ValidShippingData;
             var payments = _orderTestFixture.RandomPayment;
+            var validProducts = _orderTestFixture.ValidProducts();
 
             var order = () => new Entity.Order(null,
                                                shippingData,
-                                               payments);
+                                               validProducts,
+                                               Guid.NewGuid());
 
 
             order.Should().Throw<DomainException>().Which.ValidationResult.Should().Contain(vr => vr.Message == "Address should not be empty.");
@@ -134,10 +103,12 @@ namespace EhCommerce.UnitTests.Order.Domain.Entities
 
             var shippingData = _orderTestFixture.ValidShippingData;
             var payments = _orderTestFixture.RandomPayment;
+            var validProducts = _orderTestFixture.ValidProducts();
 
             var order = () => new Entity.Order(address,
                                                shippingData,
-                                               payments);
+                                               validProducts,
+                                               Guid.NewGuid());
 
 
             order.Should().Throw<DomainException>().Which.ValidationResult.Should().Contain(vr => vr.Message == "Street should not be empty.");
@@ -160,10 +131,12 @@ namespace EhCommerce.UnitTests.Order.Domain.Entities
 
             var shippingData = _orderTestFixture.ValidShippingData;
             var payments = _orderTestFixture.RandomPayment;
+            var validProducts = _orderTestFixture.ValidProducts();
 
             var order = () => new Entity.Order(address,
                                                shippingData,
-                                               payments);
+                                               validProducts,
+                                               Guid.NewGuid());
 
 
             order.Should().Throw<DomainException>().Which.ValidationResult.Should().Contain(vr => vr.Message == "Country should not be empty.");
@@ -186,10 +159,12 @@ namespace EhCommerce.UnitTests.Order.Domain.Entities
 
             var shippingData = _orderTestFixture.ValidShippingData;
             var payments = _orderTestFixture.RandomPayment;
+            var validProducts = _orderTestFixture.ValidProducts();
 
             var order = () => new Entity.Order(address,
                                                shippingData,
-                                               payments);
+                                               validProducts,
+                                               Guid.NewGuid());
 
 
             order.Should().Throw<DomainException>().Which.ValidationResult.Should().Contain(vr => vr.Message == "State should not be empty.");
@@ -211,11 +186,12 @@ namespace EhCommerce.UnitTests.Order.Domain.Entities
                                   invalidZipCode);
 
             var shippingData = _orderTestFixture.ValidShippingData;
-            var payments = _orderTestFixture.RandomPayment;
+            var validProducts = _orderTestFixture.ValidProducts();
 
             var order = () => new Entity.Order(address,
                                                shippingData,
-                                               payments);
+                                               validProducts,
+                                               Guid.NewGuid());
 
 
             order.Should().Throw<DomainException>().Which.ValidationResult.Should().Contain(vr => vr.Message == "ZipCode should not be empty.");
@@ -237,11 +213,12 @@ namespace EhCommerce.UnitTests.Order.Domain.Entities
                                   _orderTestFixture.Faker.Address.ZipCode());
 
             var shippingData = _orderTestFixture.ValidShippingData;
-            var payments = _orderTestFixture.RandomPayment;
+            var validProducts = _orderTestFixture.ValidProducts();
 
             var order = () => new Entity.Order(address,
                                                shippingData,
-                                               payments);
+                                               validProducts,
+                                               Guid.NewGuid());
 
 
             order.Should().Throw<DomainException>().Which.ValidationResult.Should().Contain(vr => vr.Message == "City should not be empty.");
@@ -263,11 +240,12 @@ namespace EhCommerce.UnitTests.Order.Domain.Entities
                                   _orderTestFixture.Faker.Address.ZipCode());
 
             var shippingData = _orderTestFixture.ValidShippingData;
-            var payments = _orderTestFixture.RandomPayment;
+            var validProducts = _orderTestFixture.ValidProducts();
 
             var order = () => new Entity.Order(address,
                                                shippingData,
-                                               payments);
+                                               validProducts,
+                                               Guid.NewGuid());
 
 
             order.Should().Throw<DomainException>().Which.ValidationResult.Should().Contain(vr => vr.Message == "BuildingNumber should not be empty.");
@@ -278,11 +256,12 @@ namespace EhCommerce.UnitTests.Order.Domain.Entities
         public void CreateOrderWithInvalidShippingDataShouldThrow()
         {
             var address = _orderTestFixture.ValidAddress;
-            var payments = _orderTestFixture.RandomPayment;
+            var validProducts = _orderTestFixture.ValidProducts();
 
             var order = () => new Entity.Order(address,
                                                null,
-                                               payments);
+                                               validProducts,
+                                               Guid.NewGuid());
 
 
             order.Should().Throw<DomainException>().Which.ValidationResult.Should().Contain(vr => vr.Message == "ShippingData should not be empty.");
@@ -299,32 +278,33 @@ namespace EhCommerce.UnitTests.Order.Domain.Entities
             ShippingData shippingData = new(_orderTestFixture.ValidProductPrice,
                                             invalidShippingDataCompanyDocument);
 
-            var payments = _orderTestFixture.RandomPayment;
+            var validProducts = _orderTestFixture.ValidProducts();
 
             var order = () => new Entity.Order(address,
                                                shippingData,
-                                               payments);
+                                               validProducts,
+                                               Guid.NewGuid());
 
 
             order.Should().Throw<DomainException>().Which.ValidationResult.Should().Contain(vr => vr.Message == "ShippingCompanyDocument should not be empty.");
         }
 
-        [Fact(DisplayName = nameof(AddProductWithEmptyOrNullProductShouldThrowException))]
+        [Theory(DisplayName = nameof(AddProductWithEmptyOrNullProductShouldThrowException))]
+        [InlineData(null)]
         [Trait("Domain", "Checkout")]
-        public void AddProductWithEmptyOrNullProductShouldThrowException()
+        public void AddProductWithEmptyOrNullProductShouldThrowException(List<Product> products)
         {
             var address = _orderTestFixture.ValidAddress;
             var shippingData = _orderTestFixture.ValidShippingData;
-            var payments = _orderTestFixture.RandomPayment;
+            var validProducts = _orderTestFixture.ValidProducts();
 
-            var order = new Entity.Order(address,
-                                        shippingData,
-                                        payments);
+            var action = () => new Entity.Order(address,
+                                               shippingData,
+                                               products,
+                                               Guid.NewGuid());
 
-            var action = () => order.AddItem(null);
 
-
-            action.Should().Throw<DomainException>().Which.ValidationResult.Should().Contain(vr => vr.Message == "Product should not be empty.");
+            action.Should().Throw<DomainException>().Which.ValidationResult.Should().Contain(vr => vr.Message == "Products should not be empty.");
         }
 
         [Fact(DisplayName = nameof(AddValidProductToOrderShouldNotThrow))]
@@ -333,14 +313,12 @@ namespace EhCommerce.UnitTests.Order.Domain.Entities
         {
             var address = _orderTestFixture.ValidAddress;
             var shippingData = _orderTestFixture.ValidShippingData;
-            var coupon = _orderTestFixture.ValidCoupon;
-            var payments = _orderTestFixture.RandomPayment;
+            var validProducts = _orderTestFixture.ValidProducts(1);
 
             var order = new Entity.Order(address,
                                         shippingData,
-                                        payments);
-
-            order.AddItem(_orderTestFixture.ValidProduct());
+                                        validProducts,
+                                        Guid.NewGuid());
 
 
             order.Products.Should().HaveCount(1);
@@ -427,30 +405,23 @@ namespace EhCommerce.UnitTests.Order.Domain.Entities
             productCreation.Should().Throw<DomainException>().Which.ValidationResult.Should().Contain(vr => vr.Message == "Sku should not be empty.");
         }
 
-        [Fact(DisplayName = nameof(AddValidProductToOrderShouldNotThrow))]
+        [Fact(DisplayName = nameof(TotalsShouldBeTotalsOfProducts))]
         [Trait("Domain", "Checkout")]
-        public void AddDiscountCouponToOrderShouldRecalculateTotalValue()
+        public void TotalsShouldBeTotalsOfProducts()
         {
             var address = _orderTestFixture.ValidAddress;
             var shippingData = _orderTestFixture.ValidShippingData;
             var payments = _orderTestFixture.RandomPayment;
+            var validProducts = _orderTestFixture.ValidProducts();
 
             var order = new Entity.Order(address,
                                         shippingData,
-                                        payments);
+                                        validProducts,
+                                        Guid.NewGuid());
 
-            var product1 = _orderTestFixture.ValidProduct();
+            var netTotalPriceWithoutShippingPrice = validProducts.Sum(v => v.NetPrice);
+            var grossTotalPriceWithoutShippingPrice = validProducts.Sum(v => v.GrossPrice);
 
-            var product2 = _orderTestFixture.ValidProduct();
-
-            var product3 = _orderTestFixture.ValidProduct();
-
-            var netTotalPriceWithoutShippingPrice = product1.NetPrice + product2.NetPrice + product3.NetPrice;
-            var grossTotalPriceWithoutShippingPrice = product1.GrossPrice + product2.GrossPrice + product3.GrossPrice;
-
-            order.AddItem(product1);
-            order.AddItem(product2);
-            order.AddItem(product3);
 
             order.GrossTotalPrice.Should().BeGreaterThan(order.NetTotalPrice);
             (order.NetTotalPrice - order.ShippingData.Price).Should().Be(netTotalPriceWithoutShippingPrice);
@@ -462,20 +433,6 @@ namespace EhCommerce.UnitTests.Order.Domain.Entities
         {
             yield return new object[] { new List<Payment> { } };
             yield return new object[] { null };
-        }
-
-        public static IEnumerable<object[]> ValidPaymentData()
-        {
-            var fixture = new OrderTestFixture();
-
-            yield return new object[] { new List<Payment> { fixture.ValidBilletPayment } };
-            yield return new object[] { new List<Payment> { fixture.ValidInstantPayment } };
-            yield return new object[] { new List<Payment>
-            {
-                fixture.ValidCreditCardPayment,
-                fixture.ValidCreditCardPayment
-            }
-            };
         }
     }
 }

@@ -1,11 +1,6 @@
 ﻿using EhCommerce.Language;
 using EhCommerce.Shared.Domain;
 using EhCommerce.Shared.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EhCommerce.Shared.Validator
 {
@@ -18,6 +13,28 @@ namespace EhCommerce.Shared.Validator
                                                        string value)
         {
             if (string.IsNullOrWhiteSpace(value))
+                validationResults.AddValidationResult(fieldName,
+                                                      DomainMessages.ObrigatoryField.FormatWith(fieldName));
+
+            return validationResults;
+        }
+
+        public static List<ValidationResult> ShouldNotBeEmpty<T>(this List<ValidationResult> validationResults,
+                                               string fieldName,
+                                               List<T> value)
+        {
+            if (value is null || !value.Any())
+                validationResults.AddValidationResult(fieldName,
+                                                      DomainMessages.ObrigatoryField.FormatWith(fieldName));
+
+            return validationResults;
+        }
+
+        public static List<ValidationResult> ShouldNotBeEmpty(this List<ValidationResult> validationResults,
+                                                                 string fieldName,
+                                                                 Guid value)
+        {
+            if (value == Guid.Empty)
                 validationResults.AddValidationResult(fieldName,
                                                       DomainMessages.ObrigatoryField.FormatWith(fieldName));
 

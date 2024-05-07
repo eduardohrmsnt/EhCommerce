@@ -1,7 +1,6 @@
 ﻿using EhCommerce.Checkout.ValueObjects;
 using EhCommerce.Language;
 using EhCommerce.Shared.Domain;
-using EhCommerce.Shared.Extensions;
 using EhCommerce.Shared.Validator;
 
 namespace EhCommerce.Checkout.Entities
@@ -10,16 +9,19 @@ namespace EhCommerce.Checkout.Entities
     {
         public Order(Address address,
                      ShippingData shippingData,
-                     List<Payment> payments,
+                     List<Product> products,
+                     Guid paymentId,
                      Coupon? coupon = null)
         {
             Address = address;
             ShippingData = shippingData;
-            Payments = payments;
             Coupon = coupon;
-            _products = new List<Product>();
+            PaymentId = paymentId;
+            _products = products ?? new List<Product>();
             Validate();
         }
+
+        public Guid PaymentId { get; }
 
         public decimal GrossTotalPrice => _products.Sum(p => p.GrossPrice) + ShippingData.Price;
 
@@ -29,27 +31,17 @@ namespace EhCommerce.Checkout.Entities
 
         public ShippingData ShippingData { get; }
 
-        public List<Payment> Payments { get; }
-
         public Coupon? Coupon { get; }
 
         public IReadOnlyCollection<Product> Products => _products.AsReadOnly();
 
         private List<Product> _products;
 
-        public void AddItem(Product product)
-        {
-            if (product is null)
-                Validator.Contract.ShouldNotBeNull(nameof(Product), product).Validate();
-
-            _products.Add(product);
-        }
-
         protected override void Validate()
         {
-            Validator.Contract.ShouldHaveItems(nameof(Payments), Payments)
-                              .ShouldBeFalse(nameof(Payments), Payments?.Count > 1 && (Payments?.All(c => !c.GetType().Equals(typeof(CreditCardPayment))) ?? false), DomainMessages.OnlyOneTypeOfPaymentAllowed)
-                              .ShouldNotBeNull(nameof(Address), Address)
+            Validator.Contract.ShouldNotBeNull(nameof(Address), Address)
+                              .ShouldNotBeEmpty(nameof(PaymentId), PaymentId)
+                              .ShouldNotBeEmpty(nameof(Products), _products)
                               .ShouldNotBeEmpty(nameof(Address.Street), Address?.Street)
                               .ShouldNotBeEmpty(nameof(Address.Country), Address?.Country)
                               .ShouldNotBeEmpty(nameof(Address.State), Address?.State)

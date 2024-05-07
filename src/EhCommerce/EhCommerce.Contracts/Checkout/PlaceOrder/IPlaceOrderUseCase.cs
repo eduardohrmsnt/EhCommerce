@@ -1,5 +1,4 @@
-﻿using EhCommerce.Checkout.Application.UseCases.PlaceOrder;
-using EhCommerce.Shared.Application;
+﻿using EhCommerce.Shared.Application;
 
 namespace EhCommerce.Contracts.Checkout.PlaceOrder
 {

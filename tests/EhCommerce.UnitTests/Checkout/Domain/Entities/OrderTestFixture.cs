@@ -2,7 +2,6 @@
 using EhCommerce.Checkout.Entities;
 using EhCommerce.Checkout.ValueObjects;
 using EhCommerce.UnitTests.Common;
-using System.Diagnostics;
 using Xunit;
 
 namespace EhCommerce.UnitTests.Checkout.Domain.Entities
@@ -34,6 +33,11 @@ namespace EhCommerce.UnitTests.Checkout.Domain.Entities
         public Coupon ValidCoupon => new(Faker.Lorem.Letter(num: 10).ToUpper(),
                                          Faker.Random.Int(min: 1, max: 90),
                                          Faker.Random.Decimal(min: (decimal)0.1, max: (decimal)99.0));
+
+        public List<Product> ValidProducts(int quantity = 3)
+        {
+            return Enumerable.Range(0,quantity).Select(c => ValidProduct()).ToList();
+        }
 
         public Product ValidProduct()
         {

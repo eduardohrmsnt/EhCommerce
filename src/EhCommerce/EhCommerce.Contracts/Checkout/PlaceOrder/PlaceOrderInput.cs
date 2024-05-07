@@ -1,10 +1,4 @@
-﻿using EhCommerce.Contracts.Checkout.PlaceOrder;
-using EhCommerce.Shared.Application;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using EhCommerce.Shared.Application;
 
 namespace EhCommerce.Contracts.Checkout.PlaceOrder
 {

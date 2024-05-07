@@ -4,13 +4,13 @@ namespace EhCommerce.Checkout.ValueObjects
 {
     public class Address : IValueObject
     {
-        public Address(string country,
-                       string state,
-                       string city,
-                       string street, 
-                       string buildingNumber,
-                       string description,
-                       string zipCode)
+        public Address(string? country,
+                       string? state,
+                       string? city,
+                       string? street, 
+                       string? buildingNumber,
+                       string? description,
+                       string? zipCode)
         {
             Country = country;
             State = state;
@@ -21,12 +21,12 @@ namespace EhCommerce.Checkout.ValueObjects
             ZipCode = zipCode;
         }
 
-        public string Street { get; }
-        public string State { get; }
-        public string City { get; }
-        public string Country { get;  }
-        public string BuildingNumber { get; }
-        public string ZipCode { get; }
-        public string Description { get; }
+        public string? Street { get; }
+        public string? State { get; }
+        public string? City { get; }
+        public string? Country { get;  }
+        public string? BuildingNumber { get; }
+        public string? ZipCode { get; }
+        public string? Description { get; }
     }
 }

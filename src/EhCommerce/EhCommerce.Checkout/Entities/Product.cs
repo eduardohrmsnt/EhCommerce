@@ -1,6 +1,4 @@
-﻿using EhCommerce.Language;
-using EhCommerce.Shared.Domain;
-using EhCommerce.Shared.Extensions;
+﻿using EhCommerce.Shared.Domain;
 using EhCommerce.Shared.Validator;
 
 namespace EhCommerce.Checkout.Entities
