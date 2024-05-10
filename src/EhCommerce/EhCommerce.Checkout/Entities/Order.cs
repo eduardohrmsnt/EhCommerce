@@ -7,12 +7,14 @@ namespace EhCommerce.Checkout.Entities
 {
     public sealed class Order : Entity, IAggregateRoot
     {
-        public Order(Address address,
+        public Order(Guid clientId,
+                     Address address,
                      ShippingData shippingData,
                      List<Product> products,
                      Guid paymentId,
                      Coupon? coupon = null)
         {
+            ClientId = clientId;
             Address = address;
             ShippingData = shippingData;
             Coupon = coupon;
@@ -20,6 +22,8 @@ namespace EhCommerce.Checkout.Entities
             _products = products ?? new List<Product>();
             Validate();
         }
+
+        public Guid ClientId { get; }
 
         public Guid PaymentId { get; }
 
@@ -40,6 +44,7 @@ namespace EhCommerce.Checkout.Entities
         protected override void Validate()
         {
             Validator.Contract.ShouldNotBeNull(nameof(Address), Address)
+                              .ShouldNotBeEmpty(nameof(ClientId), ClientId)
                               .ShouldNotBeEmpty(nameof(PaymentId), PaymentId)
                               .ShouldNotBeEmpty(nameof(Products), _products)
                               .ShouldNotBeEmpty(nameof(Address.Street), Address?.Street)

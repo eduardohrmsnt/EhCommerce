@@ -67,6 +67,7 @@ namespace EhCommerce.UnitTests.Checkout.Command.UseCases
             return new ShoppingCartGenericModelOutput
             {
                 Id = shoppingCartId.GetValueOrDefault(Guid.NewGuid()),
+                ClientId = Faker.Random.Guid(),
                 Products = new Faker<ShoppingCartProductModelOutput>().Rules((faker, model) => {
                     model.Quantity = faker.Random.Int(min: 1, max: 10);
                     model.ProductId = faker.Random.Guid();

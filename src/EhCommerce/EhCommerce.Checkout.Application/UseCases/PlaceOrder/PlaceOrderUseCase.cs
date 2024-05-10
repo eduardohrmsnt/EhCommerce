@@ -46,7 +46,8 @@ namespace EhCommerce.Checkout.Command.UseCases.PlaceOrder
             var paymentOutput = await _makePaymentUseCase.Handle(MakePaymentInput.FromPlaceOrderInput(request),
                                                                  cancellationToken);
 
-            var order = new Order(new Address(request.Address.Country,
+            var order = new Order(shoppingCart.ClientId, 
+                                  new Address(request.Address.Country,
                                               request.Address.State,
                                               request.Address.City,
                                               request.Address.Street,

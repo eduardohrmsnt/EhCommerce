@@ -4,6 +4,8 @@
     {
         public Guid Id { get; set; }
 
+        public Guid ClientId { get; set; }
+
         public List<ShoppingCartProductModelOutput> Products { get; set; }
 
         public CouponModelOutput Coupon { get; set; }

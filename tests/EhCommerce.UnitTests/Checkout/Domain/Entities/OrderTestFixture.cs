@@ -8,7 +8,7 @@ namespace EhCommerce.UnitTests.Checkout.Domain.Entities
 {
     [CollectionDefinition(nameof(OrderTestFixture))]
     public class CheckoutTestFixtureCollection : ICollectionFixture<OrderTestFixture> { }
-    public class OrderTestFixture : BaseFixture
+    public class OrderTestFixture : BaseCatalogFixture
     {
         public Address ValidAddress => new(Faker.Address.Country(),
                                            Faker.Address.StateAbbr(),
@@ -34,9 +34,10 @@ namespace EhCommerce.UnitTests.Checkout.Domain.Entities
                                          Faker.Random.Int(min: 1, max: 90),
                                          Faker.Random.Decimal(min: (decimal)0.1, max: (decimal)99.0));
 
+
         public List<Product> ValidProducts(int quantity = 3)
         {
-            return Enumerable.Range(0,quantity).Select(c => ValidProduct()).ToList();
+            return Enumerable.Range(0, quantity).Select(c => ValidProduct()).ToList();
         }
 
         public Product ValidProduct()
@@ -44,18 +45,10 @@ namespace EhCommerce.UnitTests.Checkout.Domain.Entities
             var price = ValidProductPrice;
 
             return new(price,
-                       ValidNetPrice(price),
+                       ValidProductNetPrice(price),
                        ValidProductSku,
                        ValidProductQuantity);
         }
-
-        public decimal ValidProductPrice => Convert.ToDecimal(Faker.Commerce.Price(min: (decimal)0.1, max: 10000));
-
-        public decimal ValidNetPrice(decimal price) => Convert.ToDecimal(Faker.Commerce.Price(min: (decimal)0.1, max: price));
-
-        public int ValidProductQuantity => Faker.Random.Int(min: 1);
-
-        public string ValidProductSku => string.Concat(Faker.Commerce.ProductAdjective().ToUpper(), Faker.Commerce.Color().ToUpper(), Faker.Lorem.Letter(1).ToUpper());
 
         public List<Payment> RandomPayment => Enumerable.Range(0, 1).Select(c =>
         {

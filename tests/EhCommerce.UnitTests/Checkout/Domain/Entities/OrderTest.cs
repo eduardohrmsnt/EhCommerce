@@ -28,7 +28,8 @@ namespace EhCommerce.UnitTests.Order.Domain.Entities
             var validCoupon = _orderTestFixture.ValidCoupon;
             var validProducts = _orderTestFixture.ValidProducts();
 
-            var order = new Entity.Order(address,
+            var order = new Entity.Order(Guid.NewGuid(),
+                                        address,
                                         shippingData,
                                         validProducts,
                                         Guid.NewGuid(),
@@ -59,7 +60,8 @@ namespace EhCommerce.UnitTests.Order.Domain.Entities
             var validCoupon = _orderTestFixture.ValidCoupon;
             var validProducts = _orderTestFixture.ValidProducts();
 
-            var action = () => new Entity.Order(address,
+            var action = () => new Entity.Order(Guid.NewGuid(),
+                                                address,
                                                 shippingData,
                                                 validProducts,
                                                 Guid.Empty,
@@ -77,7 +79,8 @@ namespace EhCommerce.UnitTests.Order.Domain.Entities
             var payments = _orderTestFixture.RandomPayment;
             var validProducts = _orderTestFixture.ValidProducts();
 
-            var order = () => new Entity.Order(null,
+            var order = () => new Entity.Order(Guid.NewGuid(),
+                                               null,
                                                shippingData,
                                                validProducts,
                                                Guid.NewGuid());
@@ -105,7 +108,8 @@ namespace EhCommerce.UnitTests.Order.Domain.Entities
             var payments = _orderTestFixture.RandomPayment;
             var validProducts = _orderTestFixture.ValidProducts();
 
-            var order = () => new Entity.Order(address,
+            var order = () => new Entity.Order(Guid.NewGuid(),
+                                               address,
                                                shippingData,
                                                validProducts,
                                                Guid.NewGuid());
@@ -133,7 +137,8 @@ namespace EhCommerce.UnitTests.Order.Domain.Entities
             var payments = _orderTestFixture.RandomPayment;
             var validProducts = _orderTestFixture.ValidProducts();
 
-            var order = () => new Entity.Order(address,
+            var order = () => new Entity.Order(Guid.NewGuid(),
+                                               address,
                                                shippingData,
                                                validProducts,
                                                Guid.NewGuid());
@@ -161,7 +166,8 @@ namespace EhCommerce.UnitTests.Order.Domain.Entities
             var payments = _orderTestFixture.RandomPayment;
             var validProducts = _orderTestFixture.ValidProducts();
 
-            var order = () => new Entity.Order(address,
+            var order = () => new Entity.Order(Guid.NewGuid(),
+                                               address,
                                                shippingData,
                                                validProducts,
                                                Guid.NewGuid());
@@ -188,7 +194,8 @@ namespace EhCommerce.UnitTests.Order.Domain.Entities
             var shippingData = _orderTestFixture.ValidShippingData;
             var validProducts = _orderTestFixture.ValidProducts();
 
-            var order = () => new Entity.Order(address,
+            var order = () => new Entity.Order(Guid.NewGuid(),
+                                               address,
                                                shippingData,
                                                validProducts,
                                                Guid.NewGuid());
@@ -215,7 +222,8 @@ namespace EhCommerce.UnitTests.Order.Domain.Entities
             var shippingData = _orderTestFixture.ValidShippingData;
             var validProducts = _orderTestFixture.ValidProducts();
 
-            var order = () => new Entity.Order(address,
+            var order = () => new Entity.Order(Guid.NewGuid(),
+                                               address,
                                                shippingData,
                                                validProducts,
                                                Guid.NewGuid());
@@ -242,7 +250,8 @@ namespace EhCommerce.UnitTests.Order.Domain.Entities
             var shippingData = _orderTestFixture.ValidShippingData;
             var validProducts = _orderTestFixture.ValidProducts();
 
-            var order = () => new Entity.Order(address,
+            var order = () => new Entity.Order(Guid.NewGuid(),
+                                               address,
                                                shippingData,
                                                validProducts,
                                                Guid.NewGuid());
@@ -258,7 +267,8 @@ namespace EhCommerce.UnitTests.Order.Domain.Entities
             var address = _orderTestFixture.ValidAddress;
             var validProducts = _orderTestFixture.ValidProducts();
 
-            var order = () => new Entity.Order(address,
+            var order = () => new Entity.Order(Guid.NewGuid(),
+                                               address,
                                                null,
                                                validProducts,
                                                Guid.NewGuid());
@@ -280,7 +290,8 @@ namespace EhCommerce.UnitTests.Order.Domain.Entities
 
             var validProducts = _orderTestFixture.ValidProducts();
 
-            var order = () => new Entity.Order(address,
+            var order = () => new Entity.Order(Guid.NewGuid(),
+                                               address,
                                                shippingData,
                                                validProducts,
                                                Guid.NewGuid());
@@ -298,7 +309,8 @@ namespace EhCommerce.UnitTests.Order.Domain.Entities
             var shippingData = _orderTestFixture.ValidShippingData;
             var validProducts = _orderTestFixture.ValidProducts();
 
-            var action = () => new Entity.Order(address,
+            var action = () => new Entity.Order(Guid.NewGuid(),
+                                               address,
                                                shippingData,
                                                products,
                                                Guid.NewGuid());
@@ -315,7 +327,8 @@ namespace EhCommerce.UnitTests.Order.Domain.Entities
             var shippingData = _orderTestFixture.ValidShippingData;
             var validProducts = _orderTestFixture.ValidProducts(1);
 
-            var order = new Entity.Order(address,
+            var order = new Entity.Order(Guid.NewGuid(), 
+                                        address,
                                         shippingData,
                                         validProducts,
                                         Guid.NewGuid());
@@ -330,7 +343,7 @@ namespace EhCommerce.UnitTests.Order.Domain.Entities
         {
             var price = _orderTestFixture.ValidProductPrice;
 
-            var netPrice = _orderTestFixture.ValidNetPrice(price);
+            var netPrice = _orderTestFixture.ValidProductNetPrice(price);
 
             var productCreation = () => new Entity.Product(0,
                                                            netPrice,
@@ -376,7 +389,7 @@ namespace EhCommerce.UnitTests.Order.Domain.Entities
         {
             var price = _orderTestFixture.ValidProductPrice;
 
-            var netPrice = _orderTestFixture.ValidNetPrice(price);
+            var netPrice = _orderTestFixture.ValidProductNetPrice(price);
 
             var productCreation = () => new Entity.Product(price,
                                                            netPrice,
@@ -395,7 +408,7 @@ namespace EhCommerce.UnitTests.Order.Domain.Entities
         {
             var price = _orderTestFixture.ValidProductPrice;
 
-            var netPrice = _orderTestFixture.ValidNetPrice(price);
+            var netPrice = _orderTestFixture.ValidProductNetPrice(price);
 
             var productCreation = () => new Entity.Product(price,
                                                            netPrice,
@@ -414,7 +427,8 @@ namespace EhCommerce.UnitTests.Order.Domain.Entities
             var payments = _orderTestFixture.RandomPayment;
             var validProducts = _orderTestFixture.ValidProducts();
 
-            var order = new Entity.Order(address,
+            var order = new Entity.Order(Guid.NewGuid(),
+                                        address,
                                         shippingData,
                                         validProducts,
                                         Guid.NewGuid());
@@ -426,6 +440,24 @@ namespace EhCommerce.UnitTests.Order.Domain.Entities
             order.GrossTotalPrice.Should().BeGreaterThan(order.NetTotalPrice);
             (order.NetTotalPrice - order.ShippingData.Price).Should().Be(netTotalPriceWithoutShippingPrice);
             (order.GrossTotalPrice - order.ShippingData.Price).Should().Be(grossTotalPriceWithoutShippingPrice);
+        }
+
+        [Fact(DisplayName = nameof(CreatingOrderWithoutClientIdShouldThrow))]
+        [Trait("Domain", "Checkout")]
+        public void CreatingOrderWithoutClientIdShouldThrow()
+        {
+            var address = _orderTestFixture.ValidAddress;
+            var shippingData = _orderTestFixture.ValidShippingData;
+            var payments = _orderTestFixture.RandomPayment;
+            var validProducts = _orderTestFixture.ValidProducts();
+
+            var orderCreation = () => new Entity.Order(Guid.Empty,
+                                                        address,
+                                                        shippingData,
+                                                        validProducts,
+                                                        Guid.NewGuid());
+
+            orderCreation.Should().Throw<DomainException>().Which.ValidationResult.Should().Contain(vr => vr.Message == "ClientId should not be empty.");
         }
 
 
